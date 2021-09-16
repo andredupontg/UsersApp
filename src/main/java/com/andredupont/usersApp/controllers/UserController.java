@@ -2,6 +2,9 @@ package com.andredupont.usersApp.controllers;
 
 import com.andredupont.usersApp.entities.User;
 import com.andredupont.usersApp.services.UserService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -35,6 +38,11 @@ public class UserController {
     }
 
     @GetMapping(value = "/{userId}")
+    @ApiOperation(value = "Returns a user for a given user id", response = User.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "The record was found"),
+            @ApiResponse(code = 404, message = "The record was not found")
+    })
     public ResponseEntity<User> getUserById(@PathVariable(name = "userId") Long userId){
         return new ResponseEntity<User>(userService.getUserById(userId), HttpStatus.OK);
     }
