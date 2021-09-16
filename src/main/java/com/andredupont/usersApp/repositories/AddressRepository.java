@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface AddressRepository extends JpaRepository<Address, Long> {
 
-    @Query("SELECT a FROM Address WHERE a.profile.user.id=?1 AND a.profile.id=?2")
+    @Query("SELECT a FROM Address a WHERE a.profile.user.id = ?1 AND a.profile.id = ?2")
     public List<Address> findByProfileAndUserId(Long userId, Long profileId);
 }

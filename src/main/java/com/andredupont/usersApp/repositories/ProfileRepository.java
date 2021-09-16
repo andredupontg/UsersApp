@@ -10,6 +10,6 @@ import java.util.Optional;
 @Repository
 public interface ProfileRepository extends JpaRepository<Profile, Long> {
 
-    @Query("SELECT p from Profile p WHERE p.user=?1 AND p.id=?2")
+    @Query("SELECT p from Profile p WHERE p.user = ?1 AND p.id = ?2")
     Optional<Profile> findByUserIdAndProfileId(Long userId, Long profileId);
 }
