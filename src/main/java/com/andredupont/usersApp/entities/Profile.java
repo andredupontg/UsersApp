@@ -22,6 +22,10 @@ public class Profile {
     @Column(name = "birth_date")
     private Date birthDate;
 
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
     public Long getId() {
         return id;
     }
@@ -52,6 +56,14 @@ public class Profile {
 
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
