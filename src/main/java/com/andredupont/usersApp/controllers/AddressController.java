@@ -5,10 +5,7 @@ import com.andredupont.usersApp.services.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,5 +19,10 @@ public class AddressController {
     @GetMapping
     public ResponseEntity<List<Address>> findAddressesByProfileAndUserId(@PathVariable("userId") Long userId, @PathVariable("profileId") Long profileId){
         return new ResponseEntity<List<Address>>(addressService.findAddressesByProfileAndUserId(userId, profileId), HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<Address> createAddress(@PathVariable("userId") Long userId, @PathVariable("profileId") Long profileId, @RequestBody Address address){
+        return new ResponseEntity<Address>(addressService.createAddress(userId, profileId, address), HttpStatus.CREATED);
     }
 }

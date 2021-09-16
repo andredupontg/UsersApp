@@ -1,12 +1,16 @@
 package com.andredupont.usersApp.services;
 
 import com.andredupont.usersApp.entities.Address;
+import com.andredupont.usersApp.entities.Profile;
 import com.andredupont.usersApp.repositories.AddressRepository;
 import com.andredupont.usersApp.repositories.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AddressService {
@@ -19,5 +23,15 @@ public class AddressService {
 
     public List<Address> findAddressesByProfileAndUserId(Long userId, Long profileId) {
         return addressRepository.findByProfileAndUserId(userId, profileId);
+    }
+
+    public Address createAddress(Long userId, Long profileId, Address address){
+        Optional<Profile> result = profileRepository.findByUserIdAndProfileId(userId, profileId);
+        if(result.isPresent()){
+            address.setProfile(result.get());
+            return addressRepository.save(address);
+        } else{
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Profile %d and user %d not found", profileId, userId));
+        }
     }
 }
